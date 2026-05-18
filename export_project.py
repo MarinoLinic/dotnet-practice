@@ -218,13 +218,34 @@ def export_project(project_path):
 
 
 if __name__ == "__main__":
-    if len(sys.argv) != 2:
-        print("Usage: python export_project.py <path_to_project>")
-        print("")
-        print("Example:")
-        print("  python export_project.py ./EmployeeApi")
-        print("  python export_project.py C:\\Users\\YourName\\EmployeeApi")
-        sys.exit(1)
+    # Auto-detect project folder in current directory
+    current_dir = Path.cwd()
     
-    project_path = sys.argv[1]
-    export_project(project_path)
+    # Look for .csproj file to identify the project
+    csproj_files = list(current_dir.glob("*.csproj"))
+    
+    if csproj_files:
+        # Found a .csproj in current directory — this IS the project root
+        project_path = current_dir
+        print(f"Found project: {csproj_files[0].name}")
+        export_project(project_path)
+    else:
+        # No .csproj here, try subdirectories
+        subdirs = [d for d in current_dir.iterdir() if d.is_dir() and not d.name.startswith('.')]
+        found = False
+        
+        for subdir in subdirs:
+            csproj = list(subdir.glob("*.csproj"))
+            if csproj:
+                print(f"Found project: {subdir.name}")
+                export_project(subdir)
+                found = True
+                break
+        
+        if not found:
+            print("❌ No .NET project found!")
+            print("")
+            print("Place this script in:")
+            print("  1. The project root (where .csproj is), OR")
+            print("  2. The parent folder (one level above the project)")
+            sys.exit(1)
