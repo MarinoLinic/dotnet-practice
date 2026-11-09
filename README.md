@@ -1,5 +1,9 @@
 # EmployeeApi
 
+<img src="favicon.svg" width="56" height="56" alt="EmployeeApi practice project icon">
+
+![EmployeeApi practice workflow diagram](docs/readme-workflow.svg)
+
 This repository contains a .NET 10 Web API project created from the `dotnet new webapi -n EmployeeApi` template and extended with SQLite support.
 
 ## What it contains
