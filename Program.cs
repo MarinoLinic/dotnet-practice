@@ -33,6 +33,24 @@ app.MapGet("/weatherforecast", () =>
 })
 .WithName("GetWeatherForecast");
 
+
+
+// Add this to Program.cs before app.Run();
+
+Console.WriteLine("=== Running C# Exercises ===");
+await TestAsync();
+
+async Task TestAsync()
+{
+    // Copy Exercise 1 code here
+    // Copy Exercise 2 code here
+    // etc...
+}
+
+// Then: dotnet run
+
+
+
 app.Run();
 
 record WeatherForecast(DateOnly Date, int TemperatureC, string? Summary)
